@@ -8,7 +8,7 @@ export class SupplyController {
 
   @Post()
   createSupply(@Body() createSupplyDto: CreateSupplyDto) {
-    const { driver, fuel, liters } = createSupplyDto;
-    return this.supplyService.createSupply(driver, fuel, liters);
+    const { driverCpf, fuel, liters } = createSupplyDto;
+    return this.supplyService.createSupply(driverCpf, fuel, liters);
   }
 }
