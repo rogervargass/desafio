@@ -1,18 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { Driver } from 'src/entities/driver/driver.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { FUEL_PRICES, FuelType } from 'src/entities/supply/fuelType';
 import { Supply } from 'src/entities/supply/supply.entity';
+import { Repository } from 'typeorm';
+import { DriverService } from '../driver/driver.service';
 
 @Injectable()
 export class SupplyService {
-  createSupply(driver: Driver, fuel: string, liters: number): Supply {
+  constructor(
+    @InjectRepository(Supply)
+    private supplyRepository: Repository<Supply>,
+    private readonly driverService: DriverService,
+  ) {}
+  async createSupply(
+    driverCpf: string,
+    fuel: string,
+    liters: number,
+  ): Promise<void> {
+    const driver = await this.driverService.findDriverByCpf(driverCpf);
     const supply = new Supply(driver, fuel, liters);
-    const total = this.calculateTotalPrice(
-      supply.getLiters(),
-      supply.getFuel(),
-    );
+    const total = this.calculateTotalPrice(supply.liters, supply.fuel);
     supply.setTotalPrice(total);
-    return supply;
+    await this.supplyRepository.save(supply);
   }
 
   private calculateTotalPrice(liters: number, fuel: FuelType): number {
