@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateDriverDto } from 'src/dtos/driver/createDriver.dto';
 import { DriverService } from 'src/services/driver/driver.service';
 
@@ -10,5 +10,10 @@ export class DriverController {
   createDriver(@Body() createDriverDto: CreateDriverDto) {
     const { name, cpf } = createDriverDto;
     return this.driverService.createDriver(name, cpf);
+  }
+
+  @Get()
+  listAllDrivers() {
+    return this.driverService.listAllDrivers();
   }
 }
