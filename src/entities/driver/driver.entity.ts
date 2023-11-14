@@ -28,7 +28,6 @@ export class Driver {
 
   @OneToMany(() => Supply, (supply) => supply.driver, {
     cascade: true,
-    eager: true,
   })
   readonly supplies: Supply[];
 

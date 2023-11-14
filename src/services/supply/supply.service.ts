@@ -4,6 +4,7 @@ import { FUEL_PRICES, FuelType } from 'src/entities/supply/fuelType';
 import { Supply } from 'src/entities/supply/supply.entity';
 import { Repository } from 'typeorm';
 import { DriverService } from '../driver/driver.service';
+import { ListSuppliesDto } from 'src/dtos/supply/listAllSupplies.dto';
 
 @Injectable()
 export class SupplyService {
@@ -24,9 +25,24 @@ export class SupplyService {
     await this.supplyRepository.save(supply);
   }
 
-  async listAllSupplies(): Promise<Supply[]> {
-    const supplies = await this.supplyRepository.find();
-    return supplies;
+  async listAllSupplies(): Promise<ListSuppliesDto[]> {
+    const registeredSupplies = await this.supplyRepository.find({
+      relations: {
+        driver: true,
+      },
+    });
+    const suppliesList = registeredSupplies.map(
+      (supply) =>
+        new ListSuppliesDto(
+          supply.id,
+          supply.fuel,
+          supply.liters,
+          supply.createdAt,
+          supply.totalPrice,
+          supply.driver,
+        ),
+    );
+    return suppliesList;
   }
 
   private calculateTotalPrice(liters: number, fuel: FuelType): number {

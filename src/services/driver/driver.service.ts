@@ -17,7 +17,11 @@ export class DriverService {
   }
 
   async listAllDrivers(): Promise<ListDriversDto[]> {
-    const registeredDrivers = await this.driverRepository.find();
+    const registeredDrivers = await this.driverRepository.find({
+      relations: {
+        supplies: true,
+      },
+    });
     const driversList = registeredDrivers.map(
       (driver) =>
         new ListDriversDto(driver.id, driver.name, driver.cpf, driver.supplies),
