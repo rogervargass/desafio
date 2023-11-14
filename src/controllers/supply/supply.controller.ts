@@ -14,6 +14,6 @@ export class SupplyController {
 
   @Get()
   listAllSupplies() {
-    return this.listAllSupplies();
+    return this.supplyService.listAllSupplies();
   }
 }
