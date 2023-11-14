@@ -24,6 +24,11 @@ export class SupplyService {
     await this.supplyRepository.save(supply);
   }
 
+  async listAllSupplies(): Promise<Supply[]> {
+    const supplies = await this.supplyRepository.find();
+    return supplies;
+  }
+
   private calculateTotalPrice(liters: number, fuel: FuelType): number {
     return liters * FUEL_PRICES[fuel];
   }

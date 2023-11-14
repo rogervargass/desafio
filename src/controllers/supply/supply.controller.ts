@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateSupplyDto } from 'src/dtos/supply/createSupply.dto';
 import { SupplyService } from 'src/services/supply/supply.service';
 
@@ -10,5 +10,10 @@ export class SupplyController {
   createSupply(@Body() createSupplyDto: CreateSupplyDto) {
     const { driverCpf, fuel, liters } = createSupplyDto;
     return this.supplyService.createSupply(driverCpf, fuel, liters);
+  }
+
+  @Get()
+  listAllSupplies() {
+    return this.listAllSupplies();
   }
 }
