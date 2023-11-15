@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ListDriversDto } from 'src/dtos/driver/listDrivers.dto';
+import { ListDriverDto } from 'src/dtos/driver/listDriver.dto';
 import { Driver } from 'src/entities/driver/driver.entity';
 import { Repository } from 'typeorm';
 
@@ -16,7 +16,7 @@ export class DriverService {
     await this.driverRepository.save(driver);
   }
 
-  async listAllDrivers(): Promise<ListDriversDto[]> {
+  async listAllDrivers(): Promise<ListDriverDto[]> {
     const registeredDrivers = await this.driverRepository.find({
       relations: {
         supplies: true,
@@ -24,10 +24,19 @@ export class DriverService {
     });
     const driversList = registeredDrivers.map(
       (driver) =>
-        new ListDriversDto(driver.id, driver.name, driver.cpf, driver.supplies),
+        new ListDriverDto(driver.id, driver.name, driver.cpf, driver.supplies),
     );
 
     return driversList;
+  }
+
+  async findDriverById(id: string): Promise<Driver> {
+    return await this.driverRepository.findOne({
+      where: { id },
+      relations: {
+        supplies: true,
+      },
+    });
   }
 
   async findDriverByCpf(cpf: string): Promise<Driver> {
