@@ -8,5 +8,5 @@ export class CreateDriverDto {
   @IsNotEmpty({ message: 'cpf cannot be empty' })
   @Length(11, 11, { message: 'cpf invalid' })
   @IsDriverAlreadyExist({ message: 'cpf is already registered' })
-  cpf: string;
+  document: string;
 }

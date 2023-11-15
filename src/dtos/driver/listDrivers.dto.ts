@@ -4,7 +4,7 @@ export class ListDriversDto {
   constructor(
     readonly id: string,
     readonly name: string,
-    readonly cpf: string,
+    readonly document: string,
     readonly supplies: Supply[],
   ) {}
 }

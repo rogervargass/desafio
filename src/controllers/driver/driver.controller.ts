@@ -8,8 +8,8 @@ export class DriverController {
 
   @Post()
   createDriver(@Body() createDriverDto: CreateDriverDto) {
-    const { name, cpf } = createDriverDto;
-    return this.driverService.createDriver(name, cpf);
+    const { name, document } = createDriverDto;
+    return this.driverService.createDriver(name, document);
   }
 
   @Get()
