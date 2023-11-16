@@ -5,9 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { FuelType } from './fuelType';
 import { Driver } from '../driver/driver.entity';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { FuelType } from 'src/types/fuelType';
 
 @Entity({ name: 'supplies' })
 @ApiTags('supply')

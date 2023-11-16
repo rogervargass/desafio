@@ -13,7 +13,7 @@ export class DriverService {
 
   async createDriver(name: string, cpf: string) {
     const driver = new Driver(name, cpf);
-    await this.driverRepository.save(driver);
+    return this.driverRepository.create(driver);
   }
 
   async listAllDrivers(): Promise<ListDriverDto[]> {

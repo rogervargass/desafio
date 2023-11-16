@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FUEL_PRICES, FuelType } from 'src/entities/supply/fuelType';
+import { ListSuppliesDto } from 'src/dtos/supply/listAllSupplies.dto';
+import { FUEL_PRICES, FuelType } from 'src/types/fuelType';
 import { Supply } from 'src/entities/supply/supply.entity';
 import { Repository } from 'typeorm';
 import { DriverService } from '../driver/driver.service';
-import { ListSuppliesDto } from 'src/dtos/supply/listAllSupplies.dto';
 
 @Injectable()
 export class SupplyService {
@@ -17,12 +17,12 @@ export class SupplyService {
     driverCpf: string,
     fuel: string,
     liters: number,
-  ): Promise<void> {
+  ): Promise<Supply> {
     const driver = await this.driverService.findDriverByCpf(driverCpf);
     const supply = new Supply(driver, fuel, liters);
     const total = this.calculateTotalPrice(supply.liters, supply.fuel);
     supply.setTotalPrice(total);
-    await this.supplyRepository.save(supply);
+    return this.supplyRepository.create(supply);
   }
 
   async listAllSupplies(): Promise<ListSuppliesDto[]> {
@@ -39,13 +39,14 @@ export class SupplyService {
           supply.liters,
           supply.createdAt,
           supply.totalPrice,
-          supply.driver,
+          supply.driver.name,
+          supply.driver.id,
         ),
     );
     return suppliesList;
   }
 
-  private calculateTotalPrice(liters: number, fuel: FuelType): number {
+  calculateTotalPrice(liters: number, fuel: FuelType): number {
     return liters * FUEL_PRICES[fuel];
   }
 }
