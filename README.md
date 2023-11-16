@@ -60,7 +60,7 @@ $ npm run start:dev
 
 - **Abastecimentos:**
 
-  - `GET /authors`: Retorna todos os abastecimentos.
-  - `POST /authors`: Adiciona um novo abastecimento.
+  - `GET /supply`: Retorna todos os abastecimentos.
+  - `POST /supply`: Adiciona um novo abastecimento.
 
 - Voce pode ter acesso ao Swagger acessando o endpoint /api
