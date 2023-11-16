@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsPositive, Length } from 'class-validator';
+import { IsNotEmpty, Length } from 'class-validator';
 import { IsDriverNotExist } from 'src/validators/IsDriverNotExist.validator';
 
 export class CreateSupplyDto {
@@ -8,8 +8,7 @@ export class CreateSupplyDto {
   driverCpf: string;
 
   @IsNotEmpty({ message: 'liters cannot be empty' })
-  @IsPositive({ message: 'liters must be positive' })
-  liters: number;
+  liters: string;
 
   @IsNotEmpty({ message: 'fuel cannot be empty' })
   fuel: string;

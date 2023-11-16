@@ -9,7 +9,7 @@ export class SupplyController {
   @Post()
   createSupply(@Body() createSupplyDto: CreateSupplyDto) {
     const { driverCpf, fuel, liters } = createSupplyDto;
-    return this.supplyService.createSupply(driverCpf, fuel, liters);
+    return this.supplyService.createSupply(driverCpf, fuel, parseInt(liters));
   }
 
   @Get()
