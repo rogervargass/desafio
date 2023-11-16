@@ -47,7 +47,7 @@ describe('Driver Service Test', () => {
         {
           provide: DRIVER_REPOSITORY_TOKEN,
           useValue: {
-            create: jest.fn().mockReturnValue(mockDriver),
+            save: jest.fn().mockReturnValue(mockDriver),
             find: jest.fn().mockReturnValue(mockDriversDb),
             findOne: jest.fn().mockReturnValue(mockDriver),
             exist: jest.fn().mockReturnValue(true),
@@ -77,7 +77,7 @@ describe('Driver Service Test', () => {
   describe('createDriver', () => {
     it('should call driverRepository once', async () => {
       await driverService.createDriver('roger', '11111111111');
-      expect(driverRepository.create).toHaveBeenCalledTimes(1);
+      expect(driverRepository.save).toHaveBeenCalledTimes(1);
     });
 
     it('should return a driver created', async () => {

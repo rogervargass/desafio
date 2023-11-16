@@ -75,7 +75,7 @@ describe('Supply Service Test', () => {
         {
           provide: SUPPLY_REPOSITORY_TOKEN,
           useValue: {
-            create: jest.fn().mockReturnValue(mockListSuppliesResponseDb[0]),
+            save: jest.fn().mockReturnValue(mockListSuppliesResponseDb[0]),
             find: jest.fn().mockReturnValue(mockListSuppliesResponseDb),
           },
         },
@@ -101,7 +101,7 @@ describe('Supply Service Test', () => {
   describe('createSupply', () => {
     it('should call supplyRepository once', async () => {
       await supplyService.createSupply('11111111111', 'GASOLINE', 3);
-      expect(supplyRepository.create).toHaveBeenCalledTimes(1);
+      expect(supplyRepository.save).toHaveBeenCalledTimes(1);
     });
 
     it('should create a supply and return', async () => {

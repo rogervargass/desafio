@@ -22,13 +22,16 @@ export class SupplyService {
     const supply = new Supply(driver, fuel, liters);
     const total = this.calculateTotalPrice(supply.liters, supply.fuel);
     supply.setTotalPrice(total);
-    return this.supplyRepository.create(supply);
+    return this.supplyRepository.save(supply);
   }
 
   async listAllSupplies(): Promise<ListSuppliesDto[]> {
     const registeredSupplies = await this.supplyRepository.find({
       relations: {
         driver: true,
+      },
+      order: {
+        createdAt: 'DESC',
       },
     });
     const suppliesList = registeredSupplies.map(

@@ -13,13 +13,16 @@ export class DriverService {
 
   async createDriver(name: string, cpf: string) {
     const driver = new Driver(name, cpf);
-    return this.driverRepository.create(driver);
+    return this.driverRepository.save(driver);
   }
 
   async listAllDrivers(): Promise<ListDriverDto[]> {
     const registeredDrivers = await this.driverRepository.find({
       relations: {
         supplies: true,
+      },
+      order: {
+        createdAt: 'DESC',
       },
     });
     const driversList = registeredDrivers.map(
